@@ -1,4 +1,4 @@
-var shuffleSequence = seq("setcounter", "intro") //"practice", "presep", sepWith("sep", rshuffle(startsWith("gram"), "f")), "exit");
+var shuffleSequence = seq("setcounter", "intro", "practice", "presep", sepWith("sep", rshuffle(startsWith("test"))), "exit");
 var practiceItemTypes = ["practice"];
 
 var defaults = [
@@ -32,7 +32,7 @@ var defaults = [
 ];
 
 var items = [
-
+    
     // New in Ibex 0.3-beta-9. You can now add a '__SendResults__' controller in your shuffle
     // sequence to send results before the experiment has finished. This is NOT intended to allow
     // for incremental sending of results -- you should send results exactly once per experiment.
@@ -42,9 +42,9 @@ var items = [
     // otherwise, results are automatically sent at the end of the experiment.
     //
     //["sr", "__SendResults__", { }],
-
+    
     ["sep", "Separator", { }],
-
+    
     // New in Ibex 0.3-beta19. You can now determine the point in the experiment at which the counter
     // for latin square designs will be updated. (Previously, this was always updated upon completion
     // of the experiment.) To do this, insert the special '__SetCounter__' controller at the desired
@@ -53,10 +53,10 @@ var items = [
     // the counter is set to the given number. (E.g., { set: 100 }, { inc: -1 })
     //
     ["setcounter", "__SetCounter__", { }],
-
+    
     // NOTE: You could also use the 'Message' controller for the experiment intro (this provides a simple
     // consent checkbox).
-
+    
     ["intro", "Form", {
         html: { include: "example_intro.html" },
         validators: {
@@ -68,49 +68,55 @@ var items = [
     ["intro", "Form", {consentRequired: true, html: {include: "intruction2.html" }} ],
     ["intro", "Form", {consentRequired: true, html: {include: "intruction3.html" }} ],
     ["exit", "Form", {consentRequired: false, html: {include: "exit.html" }} ],
-
-
+    
+    
     //    
     //an example for self-paced reading, with word-by-word presentation
-   
+    
     ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
-                 "Question", {hasCorrect: false, randomOrder: false,
-                              q: "How would you like to answer this question?",
-                              as: ["Press 1 or click here for this answer.",
-                                   "Press 2 or click here for this answer."]}],
-                                  
+     "Question", {hasCorrect: false, randomOrder: false,
+                  q: "How would you like to answer this question?",
+                  as: ["Press 1 or click here for this answer.",
+                       "Press 2 or click here for this answer."]}],
     
-   //  //an example for self-paced reading, but with user-defined word chuncks
-   //  ["practice", "DashedSentence", {s: ["Rick", "labeled", "the jar.", "Tim", "did too,", "because", "Tim", "liked", "jars."]},
-   //               "Question", {hasCorrect: true, randomOrder: true,
-   //                            q: "What did Tim do?",
-   //                            as: ["Tim labeled a jar.",
-   //                                 "Tim bought the jar Rick labeled."]}],
     
-   // ["practice", "DashedSentence", {s: "This is the last practice sentence before the experiment begins."}],
+    //an example for self-paced reading, but with user-defined word chuncks
+    ["practice", "DashedSentence", {s: "Dogs have four legs, and chicken have"},
+     "Question", {hasCorrect: true, randomOrder: true,
+                  q: "Complete the sentence.",
+                  as: ["two legs",
+                       "four legs"]}],
     
-   // ["presep", Separator, { transfer: 2000, normalMessage: "Please get ready. We will start. Please wait..." }],
+    ["practice", "DashedSentence", {s: "Snakes have no legs, and cats have"},
+     "Question", {hasCorrect: true, randomOrder: true,
+                  q: "Complete the sentence.",
+                  as: ["four legs",
+                       "two legs"]}],
 
-   //  //
-   //  // EXPERIMENT START
-   //  //
-   // [["grammatical","singular",1], "DashedSentence", {s: "The woman by the window was most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   // [["grammatical","plural",1], "DashedSentence", {s: "The woman by the windows was most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   // [["ungrammatical","singular",1], "DashedSentence", {s: "The woman by the window were most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   // [["ungrammatical","plural",1], "DashedSentence", {s: "The woman by the windows were most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-
-
-   // [["grammatical","singular",2], "DashedSentence", {s: "The flower by the bed was most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   // [["grammatical","plural",2], "DashedSentence", {s: "The flower by the beds was most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   // [["ungrammatical","singular",2], "DashedSentence", {s: "The flower by the bed were most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   // [["ungrammatical","plural",2], "DashedSentence", {s: "The flower by the beds were most definitely"},
-   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+    ["practice", "DashedSentence", {s: "This is the last practice sentence before the experiment begins."}],
+    
+    ["presep", Separator, { transfer: 2000, normalMessage: "Please get ready. We will start. Please wait..." }],
+    
+    //
+    // EXPERIMENT START
+    //
+    [["test_grammatical_singular",1], "DashedSentence", {s: "The woman by the window was most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+    [["test_grammatical_plural",1], "DashedSentence", {s: "The woman by the windows was most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+    [["test_ungrammatical_singular",1], "DashedSentence", {s: "The woman by the window were most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+    [["test_ungrammatical_plural",1], "DashedSentence", {s: "The woman by the windows were most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+    
+    
+    [["test_grammatical_singular",2], "DashedSentence", {s: "The flower by the bed was most definitely"},
+    "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+    [["test_grammatical_plural",2], "DashedSentence", {s: "The flower by the beds was most definitely"},
+    "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+    [["test_ungrammatical_singular",2], "DashedSentence", {s: "The flower by the bed were most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+    [["test_ungrammatical_plural",2], "DashedSentence", {s: "The flower by the beds were most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
     
 ];
