@@ -1,8 +1,5 @@
-var shuffleSequence = seq("setcounter", "intro", "practice", "presep", sepWith("sep", rshuffle(startsWith("test"), "f")), "exit");
+var shuffleSequence = seq("setcounter", "intro") //"practice", "presep", sepWith("sep", rshuffle(startsWith("gram"), "f")), "exit");
 var practiceItemTypes = ["practice"];
-
-
-
 
 var defaults = [
     "Separator", {
@@ -76,44 +73,44 @@ var items = [
     //    
     //an example for self-paced reading, with word-by-word presentation
    
-    ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
-                 "Question", {hasCorrect: false, randomOrder: false,
-                              q: "How would you like to answer this question?",
-                              as: ["Press 1 or click here for this answer.",
-                                   "Press 2 or click here for this answer."]}],
+   //  ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
+   //               "Question", {hasCorrect: false, randomOrder: false,
+   //                            q: "How would you like to answer this question?",
+   //                            as: ["Press 1 or click here for this answer.",
+   //                                 "Press 2 or click here for this answer."]}],
                                   
     
-    //an example for self-paced reading, but with user-defined word chuncks
-    ["practice", "DashedSentence", {s: ["Rick", "labeled", "the jar.", "Tim", "did too,", "because", "Tim", "liked", "jars."]},
-                 "Question", {hasCorrect: true, randomOrder: true,
-                              q: "What did Tim do?",
-                              as: ["Tim labeled a jar.",
-                                   "Tim bought the jar Rick labeled."]}],
+   //  //an example for self-paced reading, but with user-defined word chuncks
+   //  ["practice", "DashedSentence", {s: ["Rick", "labeled", "the jar.", "Tim", "did too,", "because", "Tim", "liked", "jars."]},
+   //               "Question", {hasCorrect: true, randomOrder: true,
+   //                            q: "What did Tim do?",
+   //                            as: ["Tim labeled a jar.",
+   //                                 "Tim bought the jar Rick labeled."]}],
     
-   ["practice", "DashedSentence", {s: "This is the last practice sentence before the experiment begins."}],
+   // ["practice", "DashedSentence", {s: "This is the last practice sentence before the experiment begins."}],
     
-   ["presep", Separator, { transfer: 2000, normalMessage: "Please get ready. We will start. Please wait..." }],
+   // ["presep", Separator, { transfer: 2000, normalMessage: "Please get ready. We will start. Please wait..." }],
 
-    //
-    // EXPERIMENT START
-    //
-   [["grammatical","singular",1], "DashedSentence", {s: "The woman by the window was most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   [["grammatical","plural",1], "DashedSentence", {s: "The woman by the windows was most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   [["ungrammatical","singular",1], "DashedSentence", {s: "The woman by the window were most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
-   [["ungrammatical","plural",1], "DashedSentence", {s: "The woman by the windows were most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+   //  //
+   //  // EXPERIMENT START
+   //  //
+   // [["grammatical","singular",1], "DashedSentence", {s: "The woman by the window was most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+   // [["grammatical","plural",1], "DashedSentence", {s: "The woman by the windows was most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+   // [["ungrammatical","singular",1], "DashedSentence", {s: "The woman by the window were most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
+   // [["ungrammatical","plural",1], "DashedSentence", {s: "The woman by the windows were most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
 
 
-   [["grammatical","singular",2], "DashedSentence", {s: "The flower by the bed was most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   [["grammatical","plural",2], "DashedSentence", {s: "The flower by the beds was most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   [["ungrammatical","singular",2], "DashedSentence", {s: "The flower by the bed were most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
-   [["ungrammatical","plural",2], "DashedSentence", {s: "The flower by the beds were most definitely"},
-               "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+   // [["grammatical","singular",2], "DashedSentence", {s: "The flower by the bed was most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+   // [["grammatical","plural",2], "DashedSentence", {s: "The flower by the beds was most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+   // [["ungrammatical","singular",2], "DashedSentence", {s: "The flower by the bed were most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
+   // [["ungrammatical","plural",2], "DashedSentence", {s: "The flower by the beds were most definitely"},
+   //             "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
     
 ];
