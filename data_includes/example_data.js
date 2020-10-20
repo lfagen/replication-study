@@ -73,11 +73,11 @@ var items = [
     //    
     //an example for self-paced reading, with word-by-word presentation
    
-   //  ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
-   //               "Question", {hasCorrect: false, randomOrder: false,
-   //                            q: "How would you like to answer this question?",
-   //                            as: ["Press 1 or click here for this answer.",
-   //                                 "Press 2 or click here for this answer."]}],
+    ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
+                 "Question", {hasCorrect: false, randomOrder: false,
+                              q: "How would you like to answer this question?",
+                              as: ["Press 1 or click here for this answer.",
+                                   "Press 2 or click here for this answer."]}],
                                   
     
    //  //an example for self-paced reading, but with user-defined word chuncks
