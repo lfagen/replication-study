@@ -119,4 +119,14 @@ var items = [
     [["test_ungrammatical_plural",2], "DashedSentence", {s: "The flower by the beds were most definitely"},
      "Question",       {q: "Complete the sentence.", as: ["blooming", "made"]}],
     
+    [["test_grammatical_singular",3], "DashedSentence", {s: "The notebook for the class was unfortunately rather"},
+    "Question",       {q: "Complete the sentence.", as: ["ripped", "difficult"]}],
+    [["test_grammatical_plural",3], "DashedSentence", {s: "The notebook for the classes was unfortunately rather"},
+    "Question",       {q: "Complete the sentence.", as: ["ripped", "difficult"]}],
+    [["test_ungrammatical_singular",3], "DashedSentence", {s: "The notebook for the class were unfortunately rather"},
+     "Question",       {q: "Complete the sentence.", as: ["ripped", "difficult"]}],
+    [["test_ungrammatical_plural",3], "DashedSentence", {s: "The notebook for the class were unfortunately rather"},
+     "Question",       {q: "Complete the sentence.", as: ["ripped", "difficult"]}],
+
+    
 ];
