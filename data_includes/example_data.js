@@ -5,7 +5,7 @@ var defaults = [
     "Separator", {
         transfer: 1000,
         normalMessage: "Please wait for the next sentence.",
-        errorMessage: "Wrong. Please wait for the next sentence."
+        errorMessage: "Please wait for the next sentence."
     },
     "DashedSentence", {
         mode: "self-paced reading"
