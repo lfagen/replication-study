@@ -64,9 +64,9 @@ var items = [
         }
     } ],
     
-    ["intro", "Form", {consentRequired: true, html: {include: "intruction1.html" }} ],
-    ["intro", "Form", {consentRequired: true, html: {include: "intruction2.html" }} ],
-    ["intro", "Form", {consentRequired: true, html: {include: "intruction3.html" }} ],
+    ["intro", "Form", {consentRequired: true, html: {include: "instruction1.html" }} ],
+    ["intro", "Form", {consentRequired: true, html: {include: "instruction2.html" }} ],
+    ["intro", "Form", {consentRequired: true, html: {include: "instruction3.html" }} ],
     ["exit", "Form", {consentRequired: false, html: {include: "exit.html" }} ],
     
     
@@ -93,8 +93,8 @@ var items = [
                   as: ["four.",
                        "two."]}],
     
-    ["practice", "Question", {q: "<q>My name \u005F\u005F\u005F quite beautiful.</q><br/>Complete the sentence.",
-                  as: ["is", "are"]}],
+    //["practice", "Question", {q: "<q>My name \u005F\u005F\u005F quite beautiful.</q><br/>Complete the sentence.",
+    //              as: ["is", "are"]}],
     
     
     //["practice", "Question", {q: "My dog ____ very smart.\nComplete the sentence.",
