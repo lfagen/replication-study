@@ -93,7 +93,7 @@ var items = [
                   as: ["four.",
                        "two."]}],
     
-    ["practice", "Question", {q: "My name \u005F\u005F\u005F quite beautiful.<br/>Complete the sentence.",
+    ["practice", "Question", {q: "<q>My name \u005F\u005F\u005F quite beautiful.</q><br/>Complete the sentence.",
                   as: ["is", "are"]}],
     
     
