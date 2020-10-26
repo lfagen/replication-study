@@ -17,7 +17,7 @@ var defaults = [
         leftComment: "(Bad)", rightComment: "(Good)"
     },
     "Question", {
-        hasCorrect: false,
+        hasCorrect: true,
         randomOrder: true,
         presentHorizontally: true
     },
@@ -93,8 +93,7 @@ var items = [
                   as: ["four.",
                        "two."]}],
     
-    ["practice", "DashedSentence", {s: "My name ____ quite a beautiful one."},
-     "Question", {q: "Complete the sentence.",
+    ["practice", "Question", {q: "My name \u005F\u005F\u005F quite beautiful.\nComplete the sentence.",
                   as: ["is", "are"]}],
     
     

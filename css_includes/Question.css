@@ -11,9 +11,10 @@
 li.normal-answer {
     text-align: middle;
     cursor: pointer;
-    padding: 10em;
-    border: 1px #9ea4b1 solid;
-
+    border: 5px #9ea4b1 solid;
+    padding: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 li:hover.normal-answer {
     cursor: pointer;
