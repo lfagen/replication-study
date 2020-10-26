@@ -81,7 +81,7 @@ var items = [
     
     
     //an example for self-paced reading, but with user-defined word chuncks
-    ["practice", "DashedSentence", {s: "Dogs have four legs, and chicken have"},
+    ["practice", "DashedSentence", {s: "Dogs have four legs, and chickens have"},
      "Question", {hasCorrect: true, randomOrder: true,
                   q: "Complete the sentence.",
                   as: ["two.",
