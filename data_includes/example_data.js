@@ -17,7 +17,7 @@ var defaults = [
         leftComment: "(Bad)", rightComment: "(Good)"
     },
     "Question", {
-        hasCorrect: true,
+        hasCorrect: false,
         randomOrder: true,
         presentHorizontally: true
     },
@@ -75,23 +75,30 @@ var items = [
     
     ["practice", "DashedSentence", {s: "This is a practice sentence to get you used to reading sentences like this."},
      "Question", {hasCorrect: false, randomOrder: false,
-                  q: "How would you like to answer this question?",
-                  as: ["Press 1 or click here for this answer.",
-                       "Press 2 or click here for this answer."]}],
+                  q: "And here is a question following the sentence."
+                  as: ["Press 1 or click",
+                       "Press 2 or click"]}],
     
     
     //an example for self-paced reading, but with user-defined word chuncks
     ["practice", "DashedSentence", {s: "Dogs have four legs, and chicken have"},
      "Question", {hasCorrect: true, randomOrder: true,
                   q: "Complete the sentence.",
-                  as: ["two legs",
-                       "four legs"]}],
+                  as: ["two.",
+                       "four."]}],
     
     ["practice", "DashedSentence", {s: "Snakes have no legs, and cats have"},
      "Question", {hasCorrect: true, randomOrder: true,
                   q: "Complete the sentence.",
-                  as: ["four legs",
-                       "two legs"]}],
+                  as: ["four.",
+                       "two."]}],
+
+    ["practice", "Question", {q: "My name ____ quite a beautiful one.\nComplete the sentence.",
+                              as: ["is", "are"]}],
+
+
+    ["practice", "Question", {q: "My dog ____ very smart.\nComplete the sentence.",
+                              as: ["is", "are"]}],
 
     ["practice", "DashedSentence", {s: "This is the last practice sentence before the experiment begins."}],
     
@@ -533,13 +540,5 @@ var items = [
      "Question",       {q: "Complete the sentence.", as: ["delicious", "organized"]}],
     [["test_ungrammatical_plural",48], "DashedSentence", {s: "The food for the events were unquestionably very"},
      "Question",       {q: "Complete the sentence.", as: ["delicious", "organized"]}],
-
-    
-    
-    
-    
-    
-    
-    
     
 ];

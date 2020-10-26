@@ -9,9 +9,10 @@
     font-size: small;
 }
 li.normal-answer {
-    text-align: left;
+    text-align: middle;
     cursor: pointer;
-    padding-bottom: 1em;
+    padding: 1em;
+    border: 1px #9ea4b1 solid;
 }
 li:hover.normal-answer {
     cursor: pointer;
