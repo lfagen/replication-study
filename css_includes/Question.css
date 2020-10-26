@@ -11,10 +11,7 @@
 li.normal-answer {
     text-align: middle;
     cursor: pointer;
-    border: 5px #9ea4b1 solid;
-    padding: 20px;
-    margin-right: 20px;
-    margin-left: 20px;
+    padding-bottom: 1em;
 }
 li:hover.normal-answer {
     cursor: pointer;
@@ -22,11 +19,11 @@ li:hover.normal-answer {
 li.scale-box {
     float: left;
     list-style: none;
-    margin-left: 0;
-    padding-left: 0;
-    margin-right: 1em;
-    padding-right: 0;
-    border: 1px #9ea4b1 solid;
+    margin-left: 2em;
+    padding-left: 2em;
+    margin-right: 2em;
+    padding-right: 2em;
+    border: 2px #9ea4b1 solid;
     width: 2em;
     height: 2em;
     padding-top: 0.5em;
