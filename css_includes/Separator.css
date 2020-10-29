@@ -1,5 +1,6 @@
 .next-item-failure-message {
-    color: red;
+    /*color: red;*/
+    font-style: italic;
 }
 .next-item-message {
     font-style: italic;
