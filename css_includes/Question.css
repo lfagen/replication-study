@@ -23,9 +23,8 @@ li.scale-box {
     margin-right: 2em;
     padding: 1em;
     border: 2px #9ea4b1 solid;
-    /*width: 2em;
-    height: 2em;*/
-    padding-top: 0.5em;
+    width: 15em;
+    /*height: 2em;*/
     text-align: center;
 }
 .scale-comment-box {
