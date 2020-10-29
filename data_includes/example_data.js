@@ -1,4 +1,4 @@
-var shuffleSequence = seq("setcounter", "intro", "practice", "presep", sepWith("sep", rshuffle(startsWith("test"))), "exit");
+var shuffleSequence = seq("setcounter", "intro", "practice", "presep", sepWith("sep", rshuffle(startsWith("test"), "f")), "exit");
 var practiceItemTypes = ["practice"];
 
 var defaults = [
@@ -107,6 +107,154 @@ var items = [
     //
     // EXPERIMENT START
     //
+
+    // FILLERS
+    ["f", "DashedSentence", {s: "The payment was usually rather"},
+     "Question",       {q: "Complete the sentence.", as: ["late", "ancient"]}],
+
+    ["f", "DashedSentence", {s: "The paper was really quite"},
+     "Question",       {q: "Complete the sentence.", as: ["boring", "innocent"]}],
+
+    ["f", "DashedSentence", {s: "The beer was certainly rather"},
+     "Question",       {q: "Complete the sentence.", as: ["sour", "visible"]}],
+  
+    ["f", "DashedSentence", {s: "The solution was really very"},
+     "Question",       {q: "Complete the sentence.", as: ["elegant", "puzzled"]}],  
+
+    ["f", "DashedSentence", {s: "The homework was quite unusually"},
+     "Question",       {q: "Complete the sentence.", as: ["difficult", "guttural"]}],
+
+    ["f", "DashedSentence", {s: "The recording was undoubtedly very"},
+     "Question",       {q: "Complete the sentence.", as: ["quiet", "tangible"]}],
+
+    ["f", "DashedSentence", {s: "The salary was most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["high", "gray"]}],
+
+    ["f", "DashedSentence", {s: "The software was entirely too"},
+     "Question",       {q: "Complete the sentence.", as: ["complicated", "damp"]}],
+
+    ["f", "DashedSentence", {s: "The paint was still somewhat"},
+     "Question",       {q: "Complete the sentence.", as: ["wet", "plausible"]}],
+
+    ["f", "DashedSentence", {s: "The office was nearly always"},
+     "Question",       {q: "Complete the sentence.", as: ["busy", "pricey"]}],
+
+    ["f", "DashedSentence", {s: "The instructions were very remarkably"},
+     "Question",       {q: "Complete the sentence.", as: ["simple", "itchy"]}],
+
+    ["f", "DashedSentence", {s: "The temperature was obviously extraordinarily"},
+     "Question",       {q: "Complete the sentence.", as: ["cold", "old-fashioned"]}],
+
+    ["f", "DashedSentence", {s: "The store was often extremely"},
+     "Question",       {q: "Complete the sentence.", as: ["crowded", "alert"]}],
+
+    ["f", "DashedSentence", {s: "The magazine was only slightly"},
+     "Question",       {q: "Complete the sentence.", as: ["ripped", "apathetic"]}],
+
+    ["f", "DashedSentence", {s: "The shoes were obviously quite"},
+     "Question",       {q: "Complete the sentence.", as: ["new", "parched"]}],
+
+    ["f", "DashedSentence", {s: "The stars were luckily fairly"},
+     "Question",       {q: "Complete the sentence.", as: ["bright", "practical"]}],
+
+    ["f", "DashedSentence", {s: "The rice was certainly very"},
+     "Question",       {q: "Complete the sentence.", as: ["mushy", "sad"]}],
+
+    ["f", "DashedSentence", {s: "The client was evidently rather"},
+     "Question",       {q: "Complete the sentence.", as: ["rich", "sparkling"]}],
+
+    ["f", "DashedSentence", {s: "The professor was almost always"},
+     "Question",       {q: "Complete the sentence.", as: ["helpful", "melted"]}],
+
+    ["f", "DashedSentence", {s: "The child was usually fairly"},
+     "Question",       {q: "Complete the sentence.", as: ["sleepy", "mountainous"]}],
+
+    ["f", "DashedSentence", {s: "The video was unfortunately extremely"},
+     "Question",       {q: "Complete the sentence.", as: ["blurry", "burnt"]}],
+
+    ["f", "DashedSentence", {s: "The shirt was clearly very"},
+     "Question",       {q: "Complete the sentence.", as: ["baggy", "adamant"]}],
+
+    ["f", "DashedSentence", {s: "The train was unquestionably very"},
+     "Question",       {q: "Complete the sentence.", as: ["fast", "harsh"]}],
+
+    ["f", "DashedSentence", {s: "The song was definitely very"},
+     "Question",       {q: "Complete the sentence.", as: ["catchy", "mighty"]}],
+
+    ["f", "DashedSentence", {s: "The comments were almost always"},
+     "Question",       {q: "Complete the sentence.", as: ["rude", "awake"]}],
+
+    ["f", "DashedSentence", {s: "The database was hardly very"},
+     "Question",       {q: "Complete the sentence.", as: ["user-friendly", "sincere"]}],
+
+    ["f", "DashedSentence", {s: "The chocolate was surprisingly quite"},
+     "Question",       {q: "Complete the sentence.", as: ["delicious", "fearful"]}],
+
+    ["f", "DashedSentence", {s: "The fish was certainly quite"},
+     "Question",       {q: "Complete the sentence.", as: ["slippery", "polite"]}],
+
+    ["f", "DashedSentence", {s: "The student was quite noticeably"},
+     "Question",       {q: "Complete the sentence.", as: ["shy", "misty"]}],
+
+    ["f", "DashedSentence", {s: "The conversation was truly remarkably"},
+     "Question",       {q: "Complete the sentence.", as: ["interesting", "purple"]}],
+
+    ["f", "DashedSentence", {s: "The town was rather quite"},
+     "Question",       {q: "Complete the sentence.", as: ["small", "convievable"]}],
+
+    ["f", "DashedSentence", {s: "The camera was evidently rather"},
+     "Question",       {q: "Complete the sentence.", as: ["expensive", "amused"]}],
+
+    ["f", "DashedSentence", {s: "The desk was most likely"},
+     "Question",       {q: "Complete the sentence.", as: ["old", "excited"]}],
+
+    ["f", "DashedSentence", {s: "The lake was entirely too"},
+     "Question",       {q: "Complete the sentence.", as: ["cold", "kind"]}],
+
+    ["f", "DashedSentence", {s: "The girl was really quite"},
+     "Question",       {q: "Complete the sentence.", as: ["tall", "metallic"]}],
+
+    ["f", "DashedSentence", {s: "The journalist was seemingly rather"},
+     "Question",       {q: "Complete the sentence.", as: ["diligent", "moldy"]}],
+
+    ["f", "DashedSentence", {s: "The engine was rather unfortunately"},
+     "Question",       {q: "Complete the sentence.", as: ["broken", "squeamish"]}],
+
+    ["f", "DashedSentence", {s: "The carpet was most certainly"},
+     "Question",       {q: "Complete the sentence.", as: ["fuzzy", "cloudy"]}],
+
+    ["f", "DashedSentence", {s: "The boy was rather unusually"},
+     "Question",       {q: "Complete the sentence.", as: ["short", "windy"]}],
+
+    ["f", "DashedSentence", {s: "The guests were probably extremely"},
+     "Question",       {q: "Complete the sentence.", as: ["drunk", "functional"]}],
+
+    ["f", "DashedSentence", {s: "The theory was certainly very"},
+     "Question",       {q: "Complete the sentence.", as: ["complex", "ethereal"]}],
+
+    ["f", "DashedSentence", {s: "The mirror was surprisingly very"},
+     "Question",       {q: "Complete the sentence.", as: ["dirty", "stingy"]}],
+
+    ["f", "DashedSentence", {s: "The menu was truly remarkably"},
+     "Question",       {q: "Complete the sentence.", as: ["long", "elderly"]}],
+
+    ["f", "DashedSentence", {s: "The room was rather unusually"},
+     "Question",       {q: "Complete the sentence.", as: ["spacious", "unlikely"]}],
+
+    ["f", "DashedSentence", {s: "The window was only slightly"},
+     "Question",       {q: "Complete the sentence.", as: ["cracked", "cowardly"]}],
+
+    ["f", "DashedSentence", {s: "The recipe was most definitely"},
+     "Question",       {q: "Complete the sentence.", as: ["delicious", "fluffy"]}],
+
+    ["f", "DashedSentence", {s: "The coffee was almost always"},
+     "Question",       {q: "Complete the sentence.", as: ["bitter", "possessive"]}],
+
+    ["f", "DashedSentence", {s: "The hotel was obviously extraordinarily"},
+     "Question",       {q: "Complete the sentence.", as: ["luxurious", "nostalgic"]}],
+    
+    // TARGETS
+
     [["test_grammatical_singular",1], "DashedSentence", {s: "The woman by the window was most definitely"},
      "Question",       {q: "Complete the sentence.", as: ["amused", "dusty"]}],
     [["test_grammatical_plural",1], "DashedSentence", {s: "The woman by the windows was most definitely"},
