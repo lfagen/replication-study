@@ -1,2 +1,4 @@
 .results/*
 .server_state/*
+.visualization/*.html
+.visualization/*.csv

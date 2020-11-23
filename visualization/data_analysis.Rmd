@@ -1,0 +1,37 @@
+---
+title: "Schlueter et al. (2009) Replication Study Results"
+output: html_notebook
+---
+
+# Loading Data
+
+```{r LOAD_DATA}
+library(dplyr)
+library(ggplot2)
+
+filepath <- "./results.csv"
+
+data <- read.csv(filepath, header=F, comment.char="#", col.names=paste0("V", 1:12), stringsAsFactors=F, na.strings = "NULL")
+data$V10 <- as.integer(data$V10)
+
+form_data <- data %>% filter(V3 == "Form")
+
+question_data <- data %>% filter(V3 == "Question" & V6 != "practice")
+
+reading_data <- data %>% filter(V3 == "DashedSentence" & V6 != "practice")
+
+str(question_data)
+```
+
+# Plots
+
+## Adjective Choice Results
+
+```{r ANALYZE_CHOICE}
+# TODO: no idea how  
+```
+
+## Reading Time Results
+```{r ANALYZE_RT}
+# TODO: no idea how
+```
