@@ -29,6 +29,7 @@ str(question_data)
 
 ```{r ANALYZE_CHOICE}
 # TODO: no idea how  
+```
 
 # violin plot
 # we can play around with how we want to visualize this
@@ -37,7 +38,6 @@ vplot <- ggplot(question_data, aes(x=V6, y=V10)) +
   geom_violin(trim=FALSE)
 vplot + stat_summary(fun=mean, geom="point", shape=23, size=2)
 
-```
 
 
 ## Reading Time Results
