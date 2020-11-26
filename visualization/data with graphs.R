@@ -1,11 +1,7 @@
 # Loading Data
 
-setwd("/Users/lucasfagen/Desktop/lx/psycholing/project/code")
-
 library(dplyr)
 library(ggplot2)
-
-txtdata<- read.csv("/Users/lucasfagen/Desktop/lx/psycholing/project/code/results.txt", header=F, comment.char="#", col.names=paste0("V", 1:12), stringsAsFactors=F)
 
 filepath <- "./results.csv"
 data <- read.csv(filepath, header=F, comment.char="#", col.names=paste0("V", 1:12), stringsAsFactors=F, na.strings = "NULL")
