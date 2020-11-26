@@ -223,10 +223,43 @@ plot_data <- plot_data %>%
 # # geom_line(aes(y=mean_RT)) +
 # # facet_grid(stim_type ~., scales = "free_y")
 # # geom_point(aes(y=RT), alpha=0.5, position = "jitter")
+
+## overall RTs
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_jitter() +
+  ggtitle("Word-by-word mean reading times")
+
+## RTs for trials where the correct adjective was chosen
+correct_data <- total_data %>%
+  filter(stim_type == "target" & accuracy_label == "correct")
+correct_data <- correct_data %>%
+  group_by(word_num, condition) %>%
+  mutate(mean_RT = mean(RT)) %>%
+  mutate(stdev_RT = sd(RT)) %>%
+  mutate(lo_RT = mean_RT - stdev_RT) %>%
+  mutate(hi_RT = mean_RT + stdev_RT) %>%
+  ungroup()
+correct_data$word_num <- as.integer(correct_data$word_num)
+ggplot(correct_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_jitter() +
+  ggtitle("Word-by-word mean reading times for correct (head-matching) trials")
+
+## RTs for trials where the attractor-matching adjective was chosen
+attractor_data <- total_data %>%
+  filter(stim_type == "target" & accuracy_label == "false")
+attractor_data <- attractor_data %>%
+  group_by(word_num, condition) %>%
+  mutate(mean_RT = mean(RT)) %>%
+  mutate(stdev_RT = sd(RT)) %>%
+  mutate(lo_RT = mean_RT - stdev_RT) %>%
+  mutate(hi_RT = mean_RT + stdev_RT) %>%
+  ungroup()
+attractor_data$word_num <- as.integer(attractor_data$word_num)
+ggplot(attractor_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_jitter() +
+  ggtitle("Word-by-word mean reading times for attractor-matching trials")
 ```
-
-## I got it to draw a plot using: 
-## ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
-## geom_line() +
-## geom_jitter()
-
