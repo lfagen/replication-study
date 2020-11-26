@@ -225,3 +225,8 @@ plot_data <- plot_data %>%
 # # geom_point(aes(y=RT), alpha=0.5, position = "jitter")
 ```
 
+## I got it to draw a plot using: 
+## ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+## geom_line() +
+## geom_jitter()
+
