@@ -1,6 +1,8 @@
 ---
 title: "Schlueter et al. (2009) Replication Study Results"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Loading Data
@@ -10,37 +12,216 @@ library(dplyr)
 library(ggplot2)
 
 filepath <- "./results.csv"
-
 data <- read.csv(filepath, header=F, comment.char="#", col.names=paste0("V", 1:12), stringsAsFactors=F, na.strings = "NULL")
-data$V10 <- as.integer(data$V10)
+names(data)[names(data)=="V1"] <- "system_time"
+names(data)[names(data)=="V2"] <- "trial"
+names(data)[names(data)=="V3"] <- "controller"
+names(data)[names(data)=="V4"] <- "item_num"
+names(data)[names(data)=="V5"] <- "element_num"
 
-form_data <- data %>% filter(V3 == "Form")
+# setting aside form and participant data
+form_data <- data %>% filter(controller == "Form")
+raw_data <- data %>% filter(controller == "Question" | controller == "DashedSentence")
+names(raw_data)[names(raw_data)=="V6"] <- "condition"
 
-question_data <- data %>% filter(V3 == "Question" & V6 != "practice")
+# renaming conditions to be more human-readable
+raw_data[raw_data$condition == "f", "condition"] <- "filler"
+raw_data[raw_data$condition == "test_grammatical_singular", "condition"] <- "grammatical_sg"
+raw_data[raw_data$condition == "test_grammatical_plural", "condition"] <- "grammatical_pl"
+raw_data[raw_data$condition == "test_ungrammatical_singular", "condition"] <- "ungrammatical_sg"
+raw_data[raw_data$condition == "test_ungrammatical_plural", "condition"] <- "ungrammatical_pl"
 
-reading_data <- data %>% filter(V3 == "DashedSentence" & V6 != "practice")
+## NON-FORM DATA: first pass at formatting data
+# adding stim_type column to easily categorize target and filler data
+raw_data <- raw_data %>%
+  mutate(stim_type = ifelse(condition == "filler",
+                            "filler",
+                            ifelse(condition %in% c("grammatical_sg", "grammatical_pl",
+                                                    "ungrammatical_sg", "ungrammatical_pl"),
+                                   "target",
+                                   NA
+                            )
+  ))
 
-str(question_data)
+# adding columns for grammaticality and attractor number (sg vs. pl) for categorization
+raw_data <- raw_data %>%
+  mutate(grammaticality = ifelse(condition %in% c("grammatical_sg", "grammatical_pl"),
+                                 "grammatical",
+                                 ifelse(condition %in% c("ungrammatical_sg", "ungrammatical_pl"),
+                                        "ungrammatical",
+                                        NA)
+  )
+  ) %>%
+  mutate(attractor = ifelse(condition %in% c("grammatical_sg", "ungrammatical_sg"),
+                            "singular",
+                            ifelse(condition %in% c("grammatical_pl", "ungrammatical_pl"),
+                                   "plural",
+                                   NA)
+  ))
+
+## QUESTION DATA
+# formatting column names for two types of data
+# first type: question
+question_data <- raw_data %>% filter(controller == "Question" & condition != "practice")
+names(question_data)[names(question_data)=="V8"] <- "question"
+names(question_data)[names(question_data)=="V9"] <- "answer"
+names(question_data)[names(question_data)=="V10"] <- "accuracy"
+names(question_data)[names(question_data)=="V11"] <- "response_time"
+
+# fixing data types
+question_data <- question_data %>%
+  mutate(accuracy = as.integer(accuracy)) %>%
+  mutate(response_time = as.integer(response_time))
+
+# adding columns for human-readable (string) and numerical (for calculations) accuracy
+question_data <- question_data %>%
+  mutate(accuracy_numeric = as.integer(accuracy)) %>%
+  mutate(accuracy_label = ifelse(accuracy == 1, "correct", "false"))
+
+## READING DATA
+# second type: dashed sentence
+reading_data <- raw_data %>% filter(controller == "DashedSentence" & condition != "practice")
+names(reading_data)[names(reading_data)=="V8"] <- "word_num"
+names(reading_data)[names(reading_data)=="V9"] <- "word"
+names(reading_data)[names(reading_data)=="V10"] <- "RT"
+names(reading_data)[names(reading_data)=="V11"] <- "newline"
+names(reading_data)[names(reading_data)=="V12"] <- "sentence"
+
+# fixing data types
+reading_data <- reading_data %>%
+  mutate(RT = as.integer(RT))
+
+# joining the question and reading dataframes
+# each row now marked for accuracy
+# skipping duplicated columns (V1-thru-V7 except for merge pivots)
+
+# using all columns from question data
+question_columns <- question_data[, -3] # all cols but controller (since we're merging data with two different values)
+
+# using non-duplicate columns for reading data (+ pivot columns)
+reading_columns <- reading_data[, c("trial", "item_num", "word_num", "word", "RT", "newline", "sentence")]
+
+total_data <- merge(question_columns, reading_columns)
 ```
 
 # Plots
 
 ## Adjective Choice Results
 
-```{r ANALYZE_CHOICE}
-# TODO: no idea how  
+```{r adj_choice}
+plot_data <- question_data
+
+plot_data %>%
+  # group_by(condition) %>%
+  group_by(condition, stim_type, grammaticality, attractor) %>%
+  summarize(n = n(),
+            n_correct = sum(accuracy_numeric),
+            accuracy = sprintf("%.2f%%", 100 * mean(accuracy_numeric)),
+            stdev = sprintf("%.4f", sd(accuracy_numeric))
+  )
+
+ggplot(plot_data, aes(x=condition, y=accuracy_numeric)) + 
+  geom_violin(aes(fill = stim_type), alpha=0.5) +
+  # geom_boxplot() +
+  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("adjective choice accuracy") +
+  xlab("condition") +
+  ggtitle("Adjective choice accuracy by condition")
+
+ggplot(plot_data, aes(x=stim_type, y=accuracy_numeric)) + 
+  geom_violin(aes(fill = stim_type), alpha=0.5) +
+  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("adjective choice accuracy") +
+  xlab("stimuli type") +
+  ggtitle("Adjective choice accuracy in fillers vs. targets")
 ```
 
-# violin plot
-# we can play around with how we want to visualize this
+## Verb Reading Time Results
+```{r verb_RT}
+plot_data <- total_data %>%
+  filter(word == "was" | word == "were") %>%
+  filter(!is.na(stim_type))
 
-vplot <- ggplot(question_data, aes(x=V6, y=V10)) + 
-  geom_violin(trim=FALSE)
-vplot + stat_summary(fun=mean, geom="point", shape=23, size=2)
+plot_data %>%
+  # group_by(condition) %>%
+  group_by(condition, stim_type, grammaticality, attractor) %>%
+  summarize(n = n(),
+            mean_RT = mean(RT),
+            stdev_RT = sprintf("%.4f", sd(RT))
+  )
 
+ggplot(plot_data, aes(x=condition, y=RT)) + 
+  geom_violin(aes(fill=stim_type)) +
+  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("condition") +
+  ggtitle("Verb Reading Time by condition")
 
+ggplot(plot_data, aes(x=stim_type, y=RT)) + 
+  geom_violin(aes(fill = stim_type)) +
+  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("stimuli type") +
+  ggtitle("Verb Reading Time in fillers vs. targets")
+
+```
+
+### Pairwise Comparisons
+```{r verb_RT_pairwise}
+plot_data <- plot_data <- total_data %>%
+  filter(word == "was" | word == "were") %>%
+  filter(stim_type == "target")
+
+ggplot(plot_data, aes(x=grammaticality, y=RT)) + 
+  geom_violin(aes(fill=attractor)) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("") +
+  ggtitle("Verb Reading Time comparison by attractor")
+
+ggplot(plot_data, aes(x=attractor, y=RT)) + 
+  geom_violin(aes(fill=grammaticality)) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("") +
+  ggtitle("Verb Reading Time comparison by grammaticality")
+
+ggplot(plot_data, aes(x=grammaticality, y=RT)) + 
+  geom_boxplot(aes(fill=attractor)) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("") +
+  ggtitle("Verb Reading Time comparison by attractor")
+
+ggplot(plot_data, aes(x=attractor, y=RT)) + 
+  geom_boxplot(aes(fill=grammaticality)) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("verb RT (ms)") +
+  xlab("") +
+  ggtitle("Verb Reading Time comparison by grammaticality")
+```
 
 ## Reading Time Results
-```{r ANALYZE_RT}
-# TODO: no idea how
+```{r RT}
+plot_data <- reading_data %>%
+  filter(stim_type == "target")
+
+# we can add error bars like after doing this I think
+plot_data <- plot_data %>%
+  group_by(word_num, condition) %>%
+  mutate(mean_RT = mean(RT)) %>%
+  mutate(stdev_RT = sd(RT)) %>%
+  mutate(lo_RT = mean_RT - stdev_RT) %>%
+  mutate(hi_RT = mean_RT + stdev_RT) %>%
+  ungroup()
+
+## ERROR: cannot get ggplot to draw a line plot for RT
+
+# ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+#   geom_line()
+#   # geom_point(size=2, shape=2)
+# # geom_line(aes(y=mean_RT)) +
+# # facet_grid(stim_type ~., scales = "free_y")
+# # geom_point(aes(y=RT), alpha=0.5, position = "jitter")
 ```
+
