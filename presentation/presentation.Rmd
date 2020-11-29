@@ -110,26 +110,47 @@ total_data <- merge(question_columns, reading_columns)
 
 # Original Study: | Schlueter et al. (2009)
 
-## Schlueter et al. (2019): Overview
+Replication Study: Schlueter et al. (2019)
+=========
+author: Lucas Fagen, Kutay Serova
+date: December 1, 2020
 
-- Topic: 
-- Aim:
+Schlueter et al. (2019): Overview
+=========
+- Agreement attraction
+- 'The key to the cabinets were rusty'
+- Why don't these sentences incur processing difficulty?
+- Facilitation in memory architecture based on cue-based retrieval
+- Highly debated topic in the psycholinguistics literature (Wagers et al. 2009, Dillon et al. 2013)
 
-## Schlueter et al. (2019): Questions
+Schlueter et al. (2019): Questions
+=========
+- Structural reanalysis or low-level rechecking?
+- Recall that final representations are not always consistent with input (garden paths, implausible sentences)
+- Reanalysis would involve excluding some of the input from the representation
 
-## Schlueter et al. (2019): Methodology
+Schlueter et al. (2019): Methodology
+=========
+- Self-paced reading with speeded forced choice task
+- 'The bed by the lamp was undoubtedly quite comfortable / bright'
+- Choice of head-matching adjective → rechecking
+- Choice of attractor-matching adjective → reanalysis
 
-## Schlueter et al. (2019): Results
+Schlueter et al. (2019): Results
+=========
+- Participants chose the attractor-matching adjective more often in the ungrammatical plural condition, but still very infrequently
+- RT data showed agreement attraction effect even when the head-matching adjective was chosen
+- Results suggest that structural reanalysis only happens rarely
 
-# Replication Study
+Replication Study
+=========
+- Platform: Ibex Farm
+- 17 participants
+- 48 experimental items and 48 fillers
+- Full procedure took approximately 10 minutes
 
-## General Info
-
-- platform: Ibex Farm
-- N participants
-- ...
-
-## Data Summary
+Data Summary | Adjective choice accuracy
+=========
 
 ```{r}
 plot_data <- question_data
@@ -145,7 +166,8 @@ plot_data %>%
   kable
 ```
 
-## Data Summary | Accuracy
+Data Summary | Adjective choice accuracy by condition
+=========
 
 ```{r}
 plot_data <- question_data
@@ -159,7 +181,8 @@ ggplot(plot_data, aes(x=condition, y=accuracy_numeric)) +
   ggtitle("Adjective choice accuracy by condition")
 ```
 
-## Data Summary | Accuracy
+Data Summary | Adjective choice accuracy: fillers vs. targets
+=========
 
 ```{r}
 plot_data <- question_data
@@ -172,7 +195,8 @@ ggplot(plot_data, aes(x=stim_type, y=accuracy_numeric)) +
   ggtitle("Adjective choice accuracy in fillers vs. targets")
 ```
 
-## Verb RT
+Data Summary | Verb RTs
+=========
 
 ```{r verb_RT}
 plot_data <- total_data %>%
@@ -189,7 +213,8 @@ plot_data %>%
   kable
 ```
 
-## no verb RT difference
+Data Summary | RTs by condition
+=========
 
 ```{r}
 plot_data <- total_data %>%
@@ -204,7 +229,9 @@ ggplot(plot_data, aes(x=condition, y=RT)) +
   ggtitle("Verb Reading Time by condition")
 ```
 
-## RT: looks promising...
+Data Summary | RTs by region
+=========
+
 ```{r}
 plot_data <- reading_data %>%
   filter(stim_type == "target") %>%
@@ -230,7 +257,9 @@ ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
   ggtitle("Word-by-word mean reading times")
 ```
 
-## but isn't...
+Data Summary | RTs by region: with variation
+=========
+
 ```{r}
 ## overall RTs
 plot_data$word_num <- as.integer(plot_data$word_num)
@@ -243,7 +272,9 @@ ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
   ggtitle("Word-by-word mean reading times")
 ```
 
-## Data has too much variation
+Data Summary | RTs split by condition
+=========
+
 ```{r}
 ## overall RTs
 plot_data$word_num <- as.integer(plot_data$word_num)
@@ -257,3 +288,17 @@ ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
   ggtitle("Word-by-word mean reading times")
 ```
 
+More data?
+=========
+- should we include a graph for RTs split by accuracy?
+
+Results: Overall
+=========
+- Agreement attraction condition did not trigger more attractor-matching adjective choices
+- Agreement attraction condition exhibited the highest RTs on the verb and spillover region, but also the most variation
+- Inconclusive results overall
+
+Conclusion
+=========
+- Thank you!
+- Any questions?
