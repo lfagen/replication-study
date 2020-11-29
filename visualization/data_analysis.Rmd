@@ -121,16 +121,16 @@ plot_data %>%
   )
 
 ggplot(plot_data, aes(x=condition, y=accuracy_numeric)) + 
-  geom_violin(aes(fill = stim_type), alpha=0.5) +
+  geom_violin(aes(fill = stim_type)) +
   # geom_boxplot() +
-  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
   ylab("adjective choice accuracy") +
   xlab("condition") +
   ggtitle("Adjective choice accuracy by condition")
 
 ggplot(plot_data, aes(x=stim_type, y=accuracy_numeric)) + 
-  geom_violin(aes(fill = stim_type), alpha=0.5) +
-  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  geom_violin(aes(fill = stim_type)) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
   ylab("adjective choice accuracy") +
   xlab("stimuli type") +
   ggtitle("Adjective choice accuracy in fillers vs. targets")
@@ -152,14 +152,14 @@ plot_data %>%
 
 ggplot(plot_data, aes(x=condition, y=RT)) + 
   geom_violin(aes(fill=stim_type)) +
-  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
   ylab("verb RT (ms)") +
   xlab("condition") +
   ggtitle("Verb Reading Time by condition")
 
 ggplot(plot_data, aes(x=stim_type, y=RT)) + 
   geom_violin(aes(fill = stim_type)) +
-  stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
   ylab("verb RT (ms)") +
   xlab("stimuli type") +
   ggtitle("Verb Reading Time in fillers vs. targets")
@@ -204,7 +204,8 @@ ggplot(plot_data, aes(x=attractor, y=RT)) +
 ## Reading Time Results
 ```{r RT}
 plot_data <- reading_data %>%
-  filter(stim_type == "target")
+  filter(stim_type == "target") %>%
+  filter(word_num < 8) # cuts 1 word after verb bc. sentences are of different lengths
 
 # we can add error bars like after doing this I think
 plot_data <- plot_data %>%
@@ -228,12 +229,53 @@ plot_data <- plot_data %>%
 plot_data$word_num <- as.integer(plot_data$word_num)
 ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
   geom_line() +
-  geom_jitter() +
+  geom_point(size=2, shape='o') +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
   ggtitle("Word-by-word mean reading times")
 
+## overall RTs with facet grid
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~grammaticality)+
+  ggtitle("Word-by-word mean reading times")
+
+## overall RTs with facet grid II
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~attractor)+
+  ggtitle("Word-by-word mean reading times")
+
+## overall RTs with facet grid III
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_grid(grammaticality~attractor)+
+  ggtitle("Word-by-word mean reading times")
+```
+
+## RTs where the correct adjective was chosen.
+```{r}
 ## RTs for trials where the correct adjective was chosen
 correct_data <- total_data %>%
-  filter(stim_type == "target" & accuracy_label == "correct")
+  filter(stim_type == "target" & accuracy_label == "correct") %>%
+  filter(word_num < 8) # cuts 1 word after verb bc. sentences are of different lengths
+
 correct_data <- correct_data %>%
   group_by(word_num, condition) %>%
   mutate(mean_RT = mean(RT)) %>%
@@ -241,15 +283,53 @@ correct_data <- correct_data %>%
   mutate(lo_RT = mean_RT - stdev_RT) %>%
   mutate(hi_RT = mean_RT + stdev_RT) %>%
   ungroup()
+
 correct_data$word_num <- as.integer(correct_data$word_num)
+
 ggplot(correct_data, aes(x=word_num, y=mean_RT, color=condition)) +
   geom_line() +
-  geom_jitter() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
   ggtitle("Word-by-word mean reading times for correct (head-matching) trials")
 
+ggplot(correct_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~grammaticality) +
+  ggtitle("Word-by-word mean reading times for correct (head-matching) trials")
+
+  ggplot(correct_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~attractor) +
+  ggtitle("Word-by-word mean reading times for correct (head-matching) trials")
+  
+  ggplot(correct_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~attractor) +
+  facet_grid(grammaticality~attractor)+
+  ggtitle("Word-by-word mean reading times for correct (head-matching) trials")
+```
+
+## RTs where the attracted adjective was chosen.
+```{r}
 ## RTs for trials where the attractor-matching adjective was chosen
 attractor_data <- total_data %>%
-  filter(stim_type == "target" & accuracy_label == "false")
+  filter(stim_type == "target" & accuracy_label == "false") %>%
+  filter(word_num < 8) # cuts 1 word after verb bc. sentences are of different lengths
+
 attractor_data <- attractor_data %>%
   group_by(word_num, condition) %>%
   mutate(mean_RT = mean(RT)) %>%
@@ -257,9 +337,43 @@ attractor_data <- attractor_data %>%
   mutate(lo_RT = mean_RT - stdev_RT) %>%
   mutate(hi_RT = mean_RT + stdev_RT) %>%
   ungroup()
+
 attractor_data$word_num <- as.integer(attractor_data$word_num)
 ggplot(attractor_data, aes(x=word_num, y=mean_RT, color=condition)) +
   geom_line() +
-  geom_jitter() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  ggtitle("Word-by-word mean reading times for attractor-matching trials")
+
+attractor_data$word_num <- as.integer(attractor_data$word_num)
+ggplot(attractor_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~grammaticality)+
+  ggtitle("Word-by-word mean reading times for attractor-matching trials")
+
+attractor_data$word_num <- as.integer(attractor_data$word_num)
+ggplot(attractor_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_wrap(~attractor)+
+  ggtitle("Word-by-word mean reading times for attractor-matching trials")
+
+attractor_data$word_num <- as.integer(attractor_data$word_num)
+ggplot(attractor_data, aes(x=word_num, y=mean_RT, color=condition)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_jitter() +
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_grid(grammaticality~attractor)+
   ggtitle("Word-by-word mean reading times for attractor-matching trials")
 ```
