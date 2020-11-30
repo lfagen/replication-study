@@ -140,6 +140,25 @@ total_data <- merge(question_columns, reading_columns)
 - RT data showed agreement attraction effect even when the head-matching adjective was chosen
 - Results suggest that structural reanalysis only happens rarely
 
+## Schlueter et al. (2019): RT
+
+```{r}
+knitr::include_graphics("./fig4.png")
+```
+
+
+## Schlueter et al. (2019): head-matching choice RT
+
+```{r}
+knitr::include_graphics("./fig5.png")
+```
+
+## Schlueter et al. (2019): head-matching choice RT
+
+```{r}
+knitr::include_graphics("./fig6.png")
+```
+
 ## Replication Study
 
 - Platform: Ibex Farm
