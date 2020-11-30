@@ -1,17 +1,20 @@
 ---
 title: "Replication Study: Schlueter et al. (2019)"
 author: "Lucas Fagen, Kutay Serova"
-date: "December, 2020"
+date: "December 1, 2020"
 output:
   ioslides_presentation:
     widescreen: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, cache = FALSE)
 library(dplyr)
 library(ggplot2)
 library(knitr)
+
+# ggplot theme
+theme_set(theme_bw())
 ```
 
 ```{r LOAD_DATA}
@@ -108,49 +111,44 @@ reading_columns <- reading_data[, c("trial", "item_num", "word_num", "word", "RT
 total_data <- merge(question_columns, reading_columns)
 ```
 
-# Original Study: | Schlueter et al. (2009)
+## Schlueter et al. (2019): Overview
 
-Replication Study: Schlueter et al. (2019)
-=========
-author: Lucas Fagen, Kutay Serova
-date: December 1, 2020
-
-Schlueter et al. (2019): Overview
-=========
 - Agreement attraction
-- 'The key to the cabinets were rusty'
+- 'The <span style="color: red;">key</span> to the <span style="color: blue;">cabinets</span> **<span style="color: blue;">were</span>** rusty.'
 - Why don't these sentences incur processing difficulty?
 - Facilitation in memory architecture based on cue-based retrieval
 - Highly debated topic in the psycholinguistics literature (Wagers et al. 2009, Dillon et al. 2013)
 
-Schlueter et al. (2019): Questions
-=========
+## Schlueter et al. (2019): Questions
+
 - Structural reanalysis or low-level rechecking?
 - Recall that final representations are not always consistent with input (garden paths, implausible sentences)
 - Reanalysis would involve excluding some of the input from the representation
 
-Schlueter et al. (2019): Methodology
-=========
+## Schlueter et al. (2019): Methodology
+
 - Self-paced reading with speeded forced choice task
-- 'The bed by the lamp was undoubtedly quite comfortable / bright'
+- 4x4 design: attractor number (sg, pl) x verb agreement (sg, pl)
+- ex: 'The <span style="color: red;">bed</span> by the <span style="color: blue;">lamp</span> was/were undoubtedly quite: <span style="color: red;">comfortable</span> / <span style="color: blue;">bright</span>
 - Choice of head-matching adjective → rechecking
 - Choice of attractor-matching adjective → reanalysis
 
-Schlueter et al. (2019): Results
-=========
-- Participants chose the attractor-matching adjective more often in the ungrammatical plural condition, but still very infrequently
+## Schlueter et al. (2019): Results
+
+- Participants chose the attractor-matching adjective more often in the *ungrammatical plural* condition, but still very infrequently
+- ex: 'The <span style="color: red;">glass</span> behind the <span style="color: blue;">curtains</span> **were** most definitely: <span style="color: blue;">tattered</span> / <span style="color: red;">shattered</span>' → **<span style="color: blue;">tattered</span>**
 - RT data showed agreement attraction effect even when the head-matching adjective was chosen
 - Results suggest that structural reanalysis only happens rarely
 
-Replication Study
-=========
+## Replication Study
+
 - Platform: Ibex Farm
-- 17 participants
+- `r length(unique(total_data$trial))` participants
 - 48 experimental items and 48 fillers
+- self-paced reading task + forced choice sentence completion
 - Full procedure took approximately 10 minutes
 
-Data Summary | Adjective choice accuracy
-=========
+## Data Summary | Adjective choice accuracy
 
 ```{r}
 plot_data <- question_data
@@ -163,40 +161,72 @@ plot_data %>%
             accuracy = sprintf("%.2f%%", 100 * mean(accuracy_numeric)),
             stdev = sprintf("%.4f", sd(accuracy_numeric)),
   ) %>%
-  kable
+  kable(align = c('l','l','l','l','c','c','c','c'))
 ```
 
-Data Summary | Adjective choice accuracy by condition
-=========
+## Data Summary | Adjective choice accuracy: fillers vs. targets
 
 ```{r}
 plot_data <- question_data
 
-ggplot(plot_data, aes(x=condition, y=accuracy_numeric)) + 
+ggplot(plot_data, aes(x="", y=accuracy_numeric)) + 
+  geom_violin(aes(fill = stim_type)) +
+  ylab("adjective choice accuracy") +
+  xlab("stimuli type") +
+  facet_grid(~stim_type, switch = 'x') +
+  ggtitle("Adjective choice accuracy in fillers vs. targets") +
+  theme(legend.position="none")
+```
+
+## Data Summary | Adjective choice accuracy by condition
+
+```{r}
+plot_data <- question_data
+
+ggplot(plot_data, aes(x="", y=accuracy_numeric)) + 
   geom_violin(aes(fill = stim_type)) +
   # geom_boxplot() +
   # stat_summary(fun=mean, geom="point", shape=2, size=2) +
   ylab("adjective choice accuracy") +
   xlab("condition") +
+  facet_grid(~condition, switch = 'x') +
+  ggtitle("Adjective choice accuracy by condition") +
+  theme(legend.position="none")
+```
+
+## Data Summary | Adjective choice accuracy by condition
+
+```{r}
+plot_data <- question_data %>%
+  filter(stim_type == "target")
+
+ggplot(plot_data, aes(x="", y=accuracy_numeric)) + 
+  geom_violin(aes(fill = condition)) +
+  # geom_boxplot() +
+  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
+  ylab("adjective choice accuracy") +
+  xlab("condition") +
+  facet_grid(attractor~grammaticality, switch = 'x') +
   ggtitle("Adjective choice accuracy by condition")
 ```
 
-Data Summary | Adjective choice accuracy: fillers vs. targets
-=========
+## Data Summary | Adjective choice accuracy by condition
 
 ```{r}
-plot_data <- question_data
+plot_data <- question_data %>%
+  filter(stim_type == "target") %>%
+  mutate(head_matching = as.factor(ifelse(accuracy_label == "correct", "head-matching", "attractor-matching")))
 
-ggplot(plot_data, aes(x=stim_type, y=accuracy_numeric)) + 
-  geom_violin(aes(fill = stim_type)) +
-  # stat_summary(fun=mean, geom="point", shape=2, size=2) +
-  ylab("adjective choice accuracy") +
-  xlab("stimuli type") +
-  ggtitle("Adjective choice accuracy in fillers vs. targets")
+ggplot(plot_data, aes(x=head_matching, fill=head_matching)) + 
+  geom_bar(color="black") +
+  facet_grid(attractor~grammaticality) +
+  theme(legend.position="none") +
+  xlab("adjective choice")
+  # facet_grid(attractor~grammaticality, switch = 'x') +
+  # ggtitle("Adjective choice accuracy by condition")
 ```
 
-Data Summary | Verb RTs
-=========
+## Data Summary | Verb RTs
 
 ```{r verb_RT}
 plot_data <- total_data %>%
@@ -207,98 +237,287 @@ plot_data %>%
   # group_by(condition) %>%
   group_by(condition, stim_type, grammaticality, attractor) %>%
   summarize(n = n(),
-            mean_RT = mean(RT),
-            stdev_RT = sprintf("%.4f", sd(RT))
+            mean_RT = sprintf("%.2f", mean(RT)),
+            stdev_RT = sprintf("%.2f", sd(RT)),
+            mean_logRT =sprintf("%.2f",  mean(log(RT))),
+            stdev_logRT = sprintf("%.2f", sd(log(RT)))
   ) %>%
-  kable
+  kable(align = c('l','l','l','l','c','c','c','c','c'))
 ```
 
-Data Summary | RTs by condition
-=========
+<!-- ## Data Summary | RTs by condition -->
+
+<!-- ```{r} -->
+<!-- plot_data <- total_data %>% -->
+<!--   filter(word == "was" | word == "were") %>% -->
+<!--   filter(!is.na(stim_type)) -->
+
+<!-- ggplot(plot_data, aes(x="", y=RT)) +  -->
+<!--   geom_violin(aes(fill=stim_type)) + -->
+<!--   # stat_summary(fun=mean, geom="point", shape=2, size=2) + -->
+<!--   ylab("verb RT (ms)") + -->
+<!--   xlab("condition") + -->
+<!--   facet_grid(~condition, switch = 'x') + -->
+<!--   ggtitle("Verb Reading Time by condition") -->
+<!-- ``` -->
+
+## Data Summary | Verb RTs by condition
 
 ```{r}
 plot_data <- total_data %>%
   filter(word == "was" | word == "were") %>%
-  filter(!is.na(stim_type))
+  filter(!is.na(stim_type))%>%
+  mutate(log_RT = log(RT))
 
-ggplot(plot_data, aes(x=condition, y=RT)) + 
+ggplot(plot_data, aes(x="", y=log_RT)) + 
   geom_violin(aes(fill=stim_type)) +
   # stat_summary(fun=mean, geom="point", shape=2, size=2) +
-  ylab("verb RT (ms)") +
+  ylab("verb log(RT)") +
   xlab("condition") +
+  facet_grid(~condition, switch = 'x') +
   ggtitle("Verb Reading Time by condition")
 ```
 
-Data Summary | RTs by region
-=========
+
+<!-- ## Data Summary | RTs by region -->
+
+<!-- ```{r} -->
+<!-- plot_data <- reading_data %>% -->
+<!--   filter(stim_type == "target") %>% -->
+<!--   filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
+<!--   mutate(log_RT = log(RT)) %>% -->
+<!--   group_by(word_num, condition) %>% -->
+<!--   mutate(mean_RT = mean(RT)) %>% -->
+<!--   mutate(stdev_RT = sd(RT)) %>% -->
+<!--   mutate(lo_RT = mean_RT - stdev_RT) %>% -->
+<!--   mutate(hi_RT = mean_RT + stdev_RT) %>% -->
+<!--   mutate(mean_log_RT = mean(log_RT)) %>% -->
+<!--   mutate(stdev_log_RT = sd(log_RT)) %>% -->
+<!--   mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>% -->
+<!--   mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>% -->
+<!--   ungroup() -->
+
+<!-- ## overall RTs -->
+<!-- plot_data$word_num <- as.integer(plot_data$word_num) -->
+<!-- ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point(size=2) + -->
+<!--   # geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) + -->
+<!--   # geom_jitter() -->
+<!--   scale_x_continuous(breaks = seq(0,9)) + -->
+<!--   ggtitle("Word-by-word mean reading times") -->
+<!-- ``` -->
+
+<!-- - Verb @ position 6 -->
+
+## Data Summary | RTs by region
 
 ```{r}
 plot_data <- reading_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) # cuts 1 word after verb bc. sentences are of different lengths
-
-# we can add error bars like after doing this I think
-plot_data <- plot_data %>%
+  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  mutate(log_RT = log(RT)) %>%
   group_by(word_num, condition) %>%
-  mutate(mean_RT = mean(RT)) %>%
-  mutate(stdev_RT = sd(RT)) %>%
-  mutate(lo_RT = mean_RT - stdev_RT) %>%
-  mutate(hi_RT = mean_RT + stdev_RT) %>%
+  # mutate(mean_RT = mean(RT)) %>%
+  # mutate(stdev_RT = sd(RT)) %>%
+  # mutate(lo_RT = mean_RT - stdev_RT) %>%
+  # mutate(hi_RT = mean_RT + stdev_RT) %>%
+  mutate(mean_log_RT = mean(log_RT)) %>%
+  mutate(stdev_log_RT = sd(log_RT)) %>%
+  mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>%
+  mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>%
   ungroup()
 
 ## overall RTs
 plot_data$word_num <- as.integer(plot_data$word_num)
-ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
   geom_line() +
   geom_point(size=2) +
-  # geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  # geom_errorbar(aes(ymin = lo_log_RT, ymax = hi_log_RT)) +
   # geom_jitter()
   scale_x_continuous(breaks = seq(0,9)) +
-  ggtitle("Word-by-word mean reading times")
+  ylab("mean log(RT)") +
+  ggtitle("Word-by-word mean Reading Times")
 ```
 
-Data Summary | RTs by region: with variation
-=========
+<!-- ## Data Summary | RTs by region: with variation -->
+
+<!-- ```{r} -->
+<!-- plot_data <- reading_data %>% -->
+<!--   filter(stim_type == "target") %>% -->
+<!--   filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
+<!--   mutate(log_RT = log(RT)) %>% -->
+<!--   group_by(word_num, condition) %>% -->
+<!--   mutate(mean_RT = mean(RT)) %>% -->
+<!--   mutate(stdev_RT = sd(RT)) %>% -->
+<!--   mutate(lo_RT = mean_RT - stdev_RT) %>% -->
+<!--   mutate(hi_RT = mean_RT + stdev_RT) %>% -->
+<!--   # mutate(mean_log_RT = mean(log_RT)) %>% -->
+<!--   # mutate(stdev_log_RT = sd(log_RT)) %>% -->
+<!--   # mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>% -->
+<!--   # mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>% -->
+<!--   ungroup() -->
+
+<!-- ## overall RTs -->
+<!-- plot_data$word_num <- as.integer(plot_data$word_num) -->
+<!-- ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point(size=2) + -->
+<!--   geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) + -->
+<!--   # geom_jitter() -->
+<!--   scale_x_continuous(breaks = seq(0,9)) + -->
+<!--   ggtitle("Word-by-word mean reading times") -->
+<!-- ``` -->
+
+## Data Summary | RTs by region: with variation
 
 ```{r}
-## overall RTs
-plot_data$word_num <- as.integer(plot_data$word_num)
-ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+plot_data <- reading_data %>%
+  filter(stim_type == "target") %>%
+  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  mutate(log_RT = log(RT)) %>%
+  group_by(word_num, condition) %>%
+  # mutate(mean_RT = mean(RT)) %>%
+  # mutate(stdev_RT = sd(RT)) %>%
+  # mutate(lo_RT = mean_RT - stdev_RT) %>%
+  # mutate(hi_RT = mean_RT + stdev_RT) %>%
+  mutate(mean_log_RT = mean(log_RT)) %>%
+  mutate(stdev_log_RT = sd(log_RT)) %>%
+  mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>%
+  mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>%
+  ungroup() %>%
+  mutate(word_num = as.integer(word_num))
+
+ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
   geom_line() +
   geom_point(size=2) +
-  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  geom_errorbar(aes(ymin = lo_log_RT, ymax = hi_log_RT)) +
   # geom_jitter()
   scale_x_continuous(breaks = seq(0,9)) +
-  ggtitle("Word-by-word mean reading times")
+  ylab("mean log(RT)") +
+  ggtitle("Word-by-word Reading Time")
 ```
 
-Data Summary | RTs split by condition
-=========
+<!-- ## Data Summary | RTs split by condition -->
+
+<!-- ```{r} -->
+<!-- ## overall RTs -->
+<!-- plot_data$word_num <- as.integer(plot_data$word_num) -->
+<!-- ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) + -->
+<!--   geom_line() + -->
+<!--   geom_point(size=2) + -->
+<!--   geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) + -->
+<!--   # geom_jitter() -->
+<!--   scale_x_continuous(breaks = seq(0,9)) + -->
+<!--   facet_grid(attractor~grammaticality, scales = "free_y") + -->
+<!--   ggtitle("Word-by-word mean reading times") -->
+<!-- ``` -->
+
+## Data Summary | RT split by factors
 
 ```{r}
+plot_data <- reading_data %>%
+  filter(stim_type == "target") %>%
+  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  mutate(log_RT = log(RT)) %>%
+  group_by(word_num, grammaticality, attractor) %>%
+  # mutate(mean_RT = mean(RT)) %>%
+  # mutate(stdev_RT = sd(RT)) %>%
+  # mutate(lo_RT = mean_RT - stdev_RT) %>%
+  # mutate(hi_RT = mean_RT + stdev_RT) %>%
+  mutate(mean_log_RT = mean(log_RT)) %>%
+  mutate(stdev_log_RT = sd(log_RT)) %>%
+  mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>%
+  mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>%
+  ungroup() %>%
+  mutate(word_num = as.integer(word_num))
+
 ## overall RTs
 plot_data$word_num <- as.integer(plot_data$word_num)
-ggplot(plot_data, aes(x=word_num, y=mean_RT, color=condition)) +
+ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
   geom_line() +
   geom_point(size=2) +
-  geom_errorbar(aes(ymin = lo_RT, ymax = hi_RT)) +
+  geom_errorbar(aes(ymin = lo_log_RT, ymax = hi_log_RT)) +
   # geom_jitter()
   scale_x_continuous(breaks = seq(0,9)) +
-  facet_grid(attractor~grammaticality) +
+  facet_grid(attractor~grammaticality, scales = "free_y") +
   ggtitle("Word-by-word mean reading times")
 ```
 
-More data?
-=========
-- should we include a graph for RTs split by accuracy?
+## Extra Data | RTs by adjective choice
 
-Results: Overall
-=========
+```{r}
+plot_data <- total_data %>%
+  filter(stim_type == "target") %>%
+  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  mutate(log_RT = log(RT)) %>%
+  group_by(word_num, grammaticality, attractor, accuracy) %>%
+  # mutate(mean_RT = mean(RT)) %>%
+  # mutate(stdev_RT = sd(RT)) %>%
+  # mutate(lo_RT = mean_RT - stdev_RT) %>%
+  # mutate(hi_RT = mean_RT + stdev_RT) %>%
+  mutate(mean_log_RT = mean(log_RT)) %>%
+  mutate(stdev_log_RT = sd(log_RT)) %>%
+  mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>%
+  mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>%
+  ungroup() %>%
+  mutate(word_num = as.integer(word_num))
+
+## RTs by accuracy
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=accuracy_label)) +
+  geom_line() +
+  geom_point(size=2) +
+  # geom_errorbar(aes(ymin = lo_log_RT, ymax = hi_log_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_grid(attractor~grammaticality, scales = "free_y") +
+  ggtitle("Word-by-word mean reading times")
+```
+
+
+## Extra Data | RTs by adjective choice with variation
+
+```{r}
+plot_data <- total_data %>%
+  filter(stim_type == "target") %>%
+  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  mutate(log_RT = log(RT)) %>%
+  group_by(word_num, grammaticality, attractor, accuracy) %>%
+  # mutate(mean_RT = mean(RT)) %>%
+  # mutate(stdev_RT = sd(RT)) %>%
+  # mutate(lo_RT = mean_RT - stdev_RT) %>%
+  # mutate(hi_RT = mean_RT + stdev_RT) %>%
+  mutate(mean_log_RT = mean(log_RT)) %>%
+  mutate(stdev_log_RT = sd(log_RT)) %>%
+  mutate(lo_log_RT = mean_log_RT - stdev_log_RT) %>%
+  mutate(hi_log_RT = mean_log_RT + stdev_log_RT) %>%
+  ungroup() %>%
+  mutate(word_num = as.integer(word_num))
+
+## RTs by accuracy
+plot_data$word_num <- as.integer(plot_data$word_num)
+ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=accuracy_label)) +
+  geom_line() +
+  geom_point(size=2) +
+  geom_errorbar(aes(ymin = lo_log_RT, ymax = hi_log_RT)) +
+  # geom_jitter()
+  scale_x_continuous(breaks = seq(0,9)) +
+  facet_grid(attractor~grammaticality, scales = "free_y") +
+  ggtitle("Word-by-word mean reading times")
+```
+
+## Results: Overall
+
 - Agreement attraction condition did not trigger more attractor-matching adjective choices
 - Agreement attraction condition exhibited the highest RTs on the verb and spillover region, but also the most variation
 - Inconclusive results overall
 
-Conclusion
-=========
+## Conclusion
+
 - Thank you!
 - Any questions?
+
+## References
+
+Schlueter, Z., Parker, D., & Lau, E. (2019). Error-driven Retrieval in Agreement Attraction rarely leads to Misinterpretation. *Frontiers in psychology*, 10, 1002.
