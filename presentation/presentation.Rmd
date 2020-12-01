@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, cache = FALSE)
 library(dplyr)
 library(ggplot2)
 library(knitr)
+library(imager)
 
 # ggplot theme
 theme_set(theme_bw())
@@ -142,7 +143,7 @@ total_data <- merge(question_columns, reading_columns)
 
 - Is the attractor re-interpreted as the thematic subject?
 - Self-paced reading with speeded forced choice task
-- 4x4 design: attractor number (sg, pl) x verb agreement (sg, pl)
+- Factorial design: attractor number (sg, pl) x verb agreement (sg, pl)
 - ex: 'The <span style="color: red;">bed</span> by the <span style="color: blue;">lamp</span> was/were undoubtedly quite: <span style="color: red;">comfortable</span> / <span style="color: blue;">bright</span>
 - Choice of head-matching adjective → rechecking
 - Choice of attractor-matching adjective → reanalysis
