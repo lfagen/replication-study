@@ -165,7 +165,7 @@ knitr::include_graphics("./fig4.png")
 knitr::include_graphics("./fig5.png")
 ```
 
-## Schlueter et al. (2019): head-matching choice RT
+## Schlueter et al. (2019): attractor-matching choice RT
 
 ```{r}
 knitr::include_graphics("./fig6.png")
