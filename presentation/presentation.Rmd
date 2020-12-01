@@ -551,4 +551,8 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=accuracy_label)) +
 
 ## References
 
+Dillon, B., Mishler, A., Sloggett, S., and Phillips, C. (2013). Contrasting intrusion profiles for agreement and anaphora: experimental and modeling evidence. *Journal of Memory and Language*, 36, 147. 
+
 Schlueter, Z., Parker, D., & Lau, E. (2019). Error-driven Retrieval in Agreement Attraction rarely leads to Misinterpretation. *Frontiers in psychology*, 10, 1002.
+
+Wagers, M.W., Lau, E.F., and Phillips, C. (2009). Agreement attraction in comprehension: representations and processes. *Journal of Memory and Language*, 49, 285.
