@@ -113,6 +113,7 @@ total_data <- merge(question_columns, reading_columns)
 
 ## Schlueter et al. (2019): Overview
 
+- Processing
 - Agreement attraction
 - 'The <span style="color: red;">key</span> to the <span style="color: blue;">cabinets</span> **<span style="color: blue;">were</span>** rusty.'
 - Why don't these sentences incur processing difficulty?
@@ -121,7 +122,7 @@ total_data <- merge(question_columns, reading_columns)
 
 ## Schlueter et al. (2019): Background
 
-- Wagers et al (2009): agreement attraction effect reflects an error-prone cue-based retrieval mechanism
+- Wagers et al. (2009): agreement attraction effect reflects an **error-triggered** cue-based retrieval mechanism
 - Rechecking triggered by encountering agreement error on the verb
 - Effect occurs when the attractor's activation level in memory is higher than the subject's
 
@@ -139,11 +140,22 @@ total_data <- merge(question_columns, reading_columns)
 
 ## Schlueter et al. (2019): Methodology
 
+- Is the attractor re-interpreted as the thematic subject?
 - Self-paced reading with speeded forced choice task
 - 4x4 design: attractor number (sg, pl) x verb agreement (sg, pl)
 - ex: 'The <span style="color: red;">bed</span> by the <span style="color: blue;">lamp</span> was/were undoubtedly quite: <span style="color: red;">comfortable</span> / <span style="color: blue;">bright</span>
 - Choice of head-matching adjective → rechecking
 - Choice of attractor-matching adjective → reanalysis
+
+## Schlueter et al. (2019): Predictions
+
+* No Restructring: grammatical subject = thematic subject
+  + expect head-matching adjective choice
+  + RT facilitation \@*plural ungrammatical*: attractor = head-matching adj.
+
+* Restructuring: attractor = thematic subject
+  + more likely to choose attractor-matching adjective
+  + RT facilitation \@*plural ungrammatical*: attractor > head-matching adj.
 
 ## Schlueter et al. (2019): Results
 
@@ -159,13 +171,13 @@ knitr::include_graphics("./fig4.png")
 ```
 
 
-## Schlueter et al. (2019): head-matching choice RT
+## Schlueter et al. (2019): head-matching adj. RT
 
 ```{r}
 knitr::include_graphics("./fig5.png")
 ```
 
-## Schlueter et al. (2019): attractor-matching choice RT
+## Schlueter et al. (2019): attractor-matching adj. RT
 
 ```{r}
 knitr::include_graphics("./fig6.png")
