@@ -541,7 +541,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=accuracy_label)) +
 ## Results: Overall
 
 - Agreement attraction condition did not trigger more attractor-matching adjective choices
-- Agreement attraction condition exhibited the highest RTs on the verb and spillover region, but also the most variation
+- Agreement attraction condition exhibited high RTs on the verb and spillover region, but also the most variation
 - Inconclusive results overall
 
 ## Conclusion
