@@ -119,11 +119,23 @@ total_data <- merge(question_columns, reading_columns)
 - Facilitation in memory architecture based on cue-based retrieval
 - Highly debated topic in the psycholinguistics literature (Wagers et al. 2009, Dillon et al. 2013)
 
+## Schlueter et al. (2019): Background
+
+- Wagers et al (2009): retrieval is a two-step process
+- Rechecking triggered by encountering agreement error on the verb
+- Agreement attraction effect occurs when the attractor's activation level in memory is higher than the subject's
+
+## Schlueter et al. (2019): Questions
+
+- What is the structural representation of the input?
+- Recall that final representations are not always consistent with the input (garden paths, implausible sentences)
+- Is the attractor being reanalyzed as the subject?
+
 ## Schlueter et al. (2019): Questions
 
 - Structural reanalysis or low-level rechecking?
-- Recall that final representations are not always consistent with input (garden paths, implausible sentences)
-- Reanalysis would involve excluding some of the input from the representation
+- Reanalysis would mean excluding some of the input from the representation
+- Rechecking would mean the final representation contains an agreement violation
 
 ## Schlueter et al. (2019): Methodology
 
