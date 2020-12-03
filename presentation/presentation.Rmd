@@ -142,7 +142,9 @@ total_data <- merge(question_columns, reading_columns)
 ## Schlueter et al. (2019): Methodology
 
 - Is the attractor re-interpreted as the thematic subject?
-- Self-paced reading with speeded forced choice task
+- Self-paced reading with forced choice task
+- 48 targets + 48 fillers
+- 64 participants
 - Factorial design: attractor number (sg, pl) x verb agreement (sg, pl)
 - ex: 'The <span style="color: red;">bed</span> by the <span style="color: blue;">lamp</span> was/were undoubtedly quite: <span style="color: red;">comfortable</span> / <span style="color: blue;">bright</span>
 - Choice of head-matching adjective → rechecking
@@ -188,9 +190,14 @@ knitr::include_graphics("./fig6.png")
 
 - Platform: Ibex Farm
 - `r length(unique(total_data$trial))` participants
-- 48 experimental items and 48 fillers
+- 48 experimental items (from Schueter et al.) + 48 fillers
 - self-paced reading task + forced choice sentence completion
 - Full procedure took approximately 10 minutes
+
+Ex:
+
+- Target: 'The glass behind the curtains were/was most definitely: tattered / shattered
+- Filler: The child was usually fairly: sleepy / mountainous
 
 ## Data Summary | Adjective choice accuracy
 
@@ -328,7 +335,7 @@ ggplot(plot_data, aes(x="", y=log_RT)) +
 <!-- ```{r} -->
 <!-- plot_data <- reading_data %>% -->
 <!--   filter(stim_type == "target") %>% -->
-<!--   filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
+<!--   filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
 <!--   mutate(log_RT = log(RT)) %>% -->
 <!--   group_by(word_num, condition) %>% -->
 <!--   mutate(mean_RT = mean(RT)) %>% -->
@@ -359,7 +366,7 @@ ggplot(plot_data, aes(x="", y=log_RT)) +
 ```{r}
 plot_data <- reading_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths
   mutate(log_RT = log(RT)) %>%
   group_by(word_num, condition) %>%
   # mutate(mean_RT = mean(RT)) %>%
@@ -389,7 +396,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
 <!-- ```{r} -->
 <!-- plot_data <- reading_data %>% -->
 <!--   filter(stim_type == "target") %>% -->
-<!--   filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
+<!--   filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths -->
 <!--   mutate(log_RT = log(RT)) %>% -->
 <!--   group_by(word_num, condition) %>% -->
 <!--   mutate(mean_RT = mean(RT)) %>% -->
@@ -418,7 +425,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
 ```{r}
 plot_data <- reading_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths
   mutate(log_RT = log(RT)) %>%
   group_by(word_num, condition) %>%
   # mutate(mean_RT = mean(RT)) %>%
@@ -462,7 +469,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
 ```{r}
 plot_data <- reading_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths
   mutate(log_RT = log(RT)) %>%
   group_by(word_num, grammaticality, attractor) %>%
   # mutate(mean_RT = mean(RT)) %>%
@@ -493,7 +500,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=condition)) +
 ```{r}
 plot_data <- total_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths
   mutate(log_RT = log(RT)) %>%
   group_by(word_num, grammaticality, attractor, accuracy) %>%
   # mutate(mean_RT = mean(RT)) %>%
@@ -525,7 +532,7 @@ ggplot(plot_data, aes(x=word_num, y=mean_log_RT, color=accuracy_label)) +
 ```{r}
 plot_data <- total_data %>%
   filter(stim_type == "target") %>%
-  filter(word_num < 8) %>% # cuts 1 word after verb bc. sentences are of different lengths
+  filter(word_num < 9) %>% # cuts 1 word after verb bc. sentences are of different lengths
   mutate(log_RT = log(RT)) %>%
   group_by(word_num, grammaticality, attractor, accuracy) %>%
   # mutate(mean_RT = mean(RT)) %>%
